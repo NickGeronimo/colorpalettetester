@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import Card from "./components/Card";
-
+import ColorEditorSidebar from "./components/ColorEditorSidebar";
+import StandoutSection from "./components/StandoutSection";
 
 export default function App() {
   const [colors, setColors] = useState({
-    primary: "#00796B",      // Deep Teal
-    secondary: "#0288D1",    // Cool Blue
-    accent: "#9575CD",      // Lavender Purple
-    neutral: "#607D8B	",      // Slate Gray
-    background: "#E0F7FA",   // Ice Blue
+    primary: "#1E3A8A",      //Dark Blue
+    secondary: "#60A5FA",    // 	Soft Sky Blue
+    accent: "#F59E0B",      // Warm Amber
+    neutral: "#6B7280",      // 	Cool Gray
+    background: "#F9FAFB",   // Very Light Gray	
   });
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
 
   const handleColorChange = (key, value) => {
     setColors((prev) => ({ ...prev, [key]: value }));
@@ -21,53 +23,95 @@ export default function App() {
       style={{
         backgroundColor: colors.background,
         color: colors.neutral,
-        minHeight: "100vh",
       }}
     >
-      <Navbar colors={colors} onColorChange={handleColorChange} />
+      <div style={{ backgroundColor: colors.background, color: colors.neutral }} className="sticky top-0 z-50">
+        <Navbar onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)} accentColor={colors.accent} neutralColor={colors.neutral} />
+        <ColorEditorSidebar
+          isOpen={isSidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          colors={colors}
+          onColorChange={handleColorChange}
+        />
+        {/* Your other page content here */}
+      </div>
 
-      <main className="space-y-20 py-8">
+      <main className="space-y-8 py-8">
         {/* Section 1: Text + Image side-by-side */}
-        <section className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8">
-          <div className="md:w-1/2">
-            <h2 className="text-3xl font-bold mb-4" style={{ color: colors.primary }}>
-              Palette Tester
-            </h2>
-            <p className="text-lg" style={{ color: colors.neutral }}>
-              This is a simple color palette tester app built with React and Tailwind CSS. You can change the colors using the controls in the navbar above. The cards below demonstrate various color combinations.
-            </p>
-          </div>
-          <div className="md:w-1/2">
-            <img
-              src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
-              alt="Sample"
-              className="shadow-lg"
-            />
-          </div>
+        <section className="space-y-8">
+          <section className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8">
+            <div className="md:w-1/2">
+              <h1 className="text-4xl font-bold mb-4" style={{ color: colors.primary }}>Choosing the Right Colors</h1>
+              <p className="text-xl max-w-2xl mx-auto">
+                This color palette tester helps you visualize how different combinations look together across various UI elements.
+                When picking colors, consider using the 60-30-10 rule:
+                <strong style={{ color: colors.primary }}> 60% primary</strong> (dominant),
+                <strong style={{ color: colors.secondary }}> 30% secondary</strong> (supporting), and
+                <strong style={{ color: colors.accent }}> 10% accent</strong> (emphasis).
+                Use <strong style={{ color: colors.neutral }}>neutral</strong> tones for balance, and ensure your <strong>background</strong> color keeps content legible.
+              <br />
+                Adjust the palette using the Pick Colors Button in the navbar to see your choices update live below.
+              </p>
+            </div>
+            <div className="md:w-1/2">
+              <img
+                src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+                alt="Sample"
+                className="shadow-lg"
+              />
+            </div>
+          </section>
+          <br />
         </section>
-        <section className="flex md:flex-row items-center mb-1">
-          <h2 className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 text-3xl font-bold mb-4">Full Width Sections</h2>
+        <section className="space-y-8" style={{ backgroundColor: colors.primary, color: colors.background }}>
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 py-8" >
+            <div className="md:w-1/2 md:order-2">
+              <h2 className="text-3xl font-bold mb-4">Designing for Dark Mode</h2>
+              <p className="text-lg max-w-2xl mx-auto">
+                Dark mode is more than just inverting colors—it's about reducing eye strain and improving contrast in low-light environments.
+                When building a dark color palette, start with a deep neutral background (like charcoal or navy) and pair it with lighter text for readability.
+                Use accent colors sparingly to maintain visual hierarchy and avoid overwhelming brightness.
+              <br />
+                Tip: Test how your primary, secondary, and accent colors behave on dark surfaces. Some colors may need to be lightened or saturated
+                differently to remain accessible and visually appealing.
+              </p>
+            </div>
+            <div className="md:w-1/2 md:order-1">
+              <img
+                src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+                alt="Sample"
+                className="shadow-lg"
+              />
+            </div>
+          </div>
         </section>
         {/* Section 2: Background uses primary color */}
-        <section
-          className="p-12 rounded"
-          style={{ backgroundColor: colors.primary, color: colors.background }}
-        >
-
-                    <div className="md:w-1/2">
-          <h2 className="text-3xl font-bold mb-4" style={{ color: colors.background }}>Standout Section</h2>
-          <p style={{ color: colors.background }}>
-            This section uses the primary color as background to make it really pop
-            and draw attention.
-          </p>
-          </div>
-
+        <section className="">
+          <section className="flex md:flex-row items-center mb-1">
+            <h2 className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 text-3xl font-bold mb-4">Full Width Sections</h2>
+          </section>
+          <StandoutSection
+            bgColorKey="primary"
+            bgColor={colors.primary}
+            textColorKey={"background"}
+            textColor={colors.background}
+          />
+          <StandoutSection
+            bgColorKey="secondary"
+            bgColor={colors.secondary}
+            textColorKey="background"
+            textColor={colors.background}
+          />
+          <StandoutSection
+            bgColorKey="accent"
+            bgColor={colors.accent}
+            textColorKey="background"
+            textColor={colors.background}
+          />
         </section>
-
         {/* Section 3: Three cards with different content */}
-        <section className="flex md:flex-row items-center mb-1">
-          <h2 className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 text-3xl font-bold mb-4">Color Card Combos</h2>
-        </section>
+
+
         <section className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
 
           <Card
