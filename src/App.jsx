@@ -3,14 +3,15 @@ import Navbar from "./components/Navbar";
 import Card from "./components/Card";
 import ColorEditorSidebar from "./components/ColorEditorSidebar";
 import StandoutSection from "./components/StandoutSection";
+import ContrastChecker from "./components/ContrastChecker";
 
 export default function App() {
   const [colors, setColors] = useState({
-    primary: "#1E3A8A",      //Dark Blue
-    secondary: "#60A5FA",    // 	Soft Sky Blue
-    accent: "#F59E0B",      // Warm Amber
-    neutral: "#6B7280",      // 	Cool Gray
-    background: "#F9FAFB",   // Very Light Gray	
+    primary: "#1E3A8A",   
+    secondary: "#154D4B",   
+    accent: "#43F7F1",      
+    neutral: "#1C151B",      
+    background: "#F9FAFB",  	
   });
   const [isSidebarOpen, setSidebarOpen] = useState(true);
 
@@ -19,6 +20,7 @@ export default function App() {
   };
 
   return (
+  
     <div
       style={{
         backgroundColor: colors.background,
@@ -26,7 +28,7 @@ export default function App() {
       }}
     >
       <div style={{ backgroundColor: colors.background, color: colors.neutral }} className="sticky top-0 z-50">
-        <Navbar onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)} accentColor={colors.accent} neutralColor={colors.neutral} />
+        <Navbar onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)} accentColor={colors.accent} neutralColor={colors.neutral} backgroundColor={colors.background} primaryColor={colors.primary} secondaryColor={colors.secondary} />
         <ColorEditorSidebar
           isOpen={isSidebarOpen}
           onClose={() => setSidebarOpen(false)}
@@ -36,7 +38,8 @@ export default function App() {
         {/* Your other page content here */}
       </div>
 
-      <main className="space-y-8 py-8">
+      <main className="space-y-8 py-8" id="hero">
+              <ContrastChecker palette={colors} />
         {/* Section 1: Text + Image side-by-side */}
         <section className="space-y-8">
           <section className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8">
@@ -63,7 +66,7 @@ export default function App() {
           </section>
           <br />
         </section>
-        <section className="space-y-8" style={{ backgroundColor: colors.primary, color: colors.background }}>
+        <section className="space-y-8" style={{ backgroundColor: colors.neutral, color: colors.background }}>
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 py-8" >
             <div className="md:w-1/2 md:order-2">
               <h2 className="text-3xl font-bold mb-4">Designing for Dark Mode</h2>
@@ -86,7 +89,7 @@ export default function App() {
           </div>
         </section>
         {/* Section 2: Background uses primary color */}
-        <section className="">
+        <section className="" id="components">
           <section className="flex md:flex-row items-center mb-1">
             <h2 className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8 text-3xl font-bold mb-4">Full Width Sections</h2>
           </section>
