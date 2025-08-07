@@ -1,7 +1,7 @@
 export default function Navbar({ onToggleSidebar,accentColor, neutralColor, primaryColor,backgroundColor, secondaryColor }) {
   return (
     <nav className="flex justify-between items-center p-4 border-b-2" id="nav" style={{backgroundColor: backgroundColor, color: primaryColor, borderColor: neutralColor}}>
-      <h1 className="text-3xl font-bold">Web Color Palette Visualizer</h1>
+      <h1 className="text-3xl font-bold">Accessible Color Toolkit</h1>
       <a
         href="https://www.w3.org/WAI/WCAG21/Understanding/"
         target="_blank"
